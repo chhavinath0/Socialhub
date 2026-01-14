@@ -44,10 +44,11 @@ public class User {
 
     @Column(name = "full_name", length = 100)
     @Pattern(
-            regexp = "^[A-Za-z ]+$",
-            message = "Full name must contain only alphabets and spaces"
+            regexp = "^[A-Za-z]{2,}(?: [A-Za-z]{2,})*$",
+            message = "Full name must contain at least two alphabets and may include spaces between words"
     )
     private String fullName;
+
 
 
     @Column(columnDefinition = "TEXT")
