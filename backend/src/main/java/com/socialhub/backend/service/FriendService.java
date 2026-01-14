@@ -1,4 +1,3 @@
-
 package com.socialhub.backend.service;
 
 import com.socialhub.backend.dto.FriendDTO;
@@ -21,7 +20,7 @@ public class FriendService {
     private final FriendshipRepository friendshipRepository;
     private final UserRepository userRepository;
     private final BlockedUserRepository blockedUserRepository;
-    //private final NotificationService notificationService;
+    private final NotificationService notificationService;
 
     @Transactional
     public FriendRequestDTO sendFriendRequest(Long senderId, Long receiverId) {
@@ -53,7 +52,6 @@ public class FriendService {
         FriendRequest savedRequest = friendRequestRepository.save(request);
 
         // Create notification
-        /*
         notificationService.createNotification(
                 receiverId,
                 senderId,
@@ -61,8 +59,6 @@ public class FriendService {
                 savedRequest.getId(),
                 sender.getUsername() + " sent you a friend request"
         );
-
-         */
 
         return convertToDTO(savedRequest);
     }
@@ -99,7 +95,6 @@ public class FriendService {
         friendshipRepository.save(friendship2);
 
         // Create notification
-        /*
         notificationService.createNotification(
                 request.getSender().getId(),
                 userId,
@@ -107,8 +102,6 @@ public class FriendService {
                 requestId,
                 request.getReceiver().getUsername() + " accepted your friend request"
         );
-
-         */
     }
 
     @Transactional
@@ -205,4 +198,3 @@ public class FriendService {
         return dto;
     }
 }
-
