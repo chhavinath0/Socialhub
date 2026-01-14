@@ -1,0 +1,36 @@
+.create-post-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.create-post-card textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    resize: none;
+    font-size: 14px;
+}
+
+.create-post-card button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.create-post-card button:hover:not(:disabled) {
+    background: #5a67d8;
+}
+
+.create-post-card button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
