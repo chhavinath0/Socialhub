@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
-
+import Friends from './pages/Friend';
 function PrivateRoute({ children }) {
     const { isAuthenticated, loading } = useAuth();
     if (loading) return <div>Loading...</div>;
@@ -24,6 +24,11 @@ function App() {
                         </PrivateRoute>
                     } />
                     <Route path="*" element={<Navigate to="/dashboard" />} />
+                    <Route path="/friends" element={
+                        <PrivateRoute>
+                            <Friends />
+                        </PrivateRoute>
+                    } />
                 </Routes>
             </Router>
         </AuthProvider>

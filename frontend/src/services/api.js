@@ -30,7 +30,12 @@ export const getUserById = (id) => api.get(`/users/${id}`);
 export const searchUsers = (query) => api.get(`/users/search?query=${query}`);
 
 // Post APIs
-export const createPost = (postData) => api.post('/posts', postData);
+//export const createPost = (postData) => api.post('/posts', postData);
+export const createPost = (postData)=> api.post('/posts',postData, {
+    headers:{
+        'Content-Type':null
+    }
+});
 export const getFeed = (userId) => api.get(`/posts/feed?userId=${userId}`);
 export const getUserPosts = (userId, currentUserId) =>
     api.get(`/posts/user/${userId}?currentUserId=${currentUserId}`);

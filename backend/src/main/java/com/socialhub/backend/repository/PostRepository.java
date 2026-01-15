@@ -19,4 +19,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.user.id = ?1 ORDER BY p.createdAt DESC")
     List<Post> findByUserIdWithAllVisibility(Long userId);
+
+    // ✅ ADDED THIS: Fetches all posts for a list of users (friends + self)
+    @Query("SELECT p FROM Post p WHERE p.user.id IN ?1 ORDER BY p.createdAt DESC")
+    List<Post> findAllByUserIds(List<Long> userIds);
+
 }

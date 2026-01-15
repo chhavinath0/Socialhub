@@ -27,21 +27,16 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             const response = await loginAPI(credentials);
-            const { token } = response.data;
+            const { token, user } = response.data;
 
             localStorage.setItem('token', token);
+            localStorage.setItem('user',JSON.stringify(user));
             setToken(token);
-
-            // Decode user info from token (simplified - in production use proper JWT decode)
-            const userData = {
-                id: 1, // This should come from token or separate API call
-                username: credentials.username,
-            };
-
-            localStorage.setItem('user', JSON.stringify(userData));
-            setUser(userData);
+            setUser(user);
 
             return true;
+
+            // Decode user info from token (simplified - in production use proper JWT decode)
         } catch (error) {
             console.error('Login failed:', error);
             throw error;

@@ -1,0 +1,425 @@
+
+/*.profile-page {*/
+/*    min-height: 100vh;*/
+/*    background: #fafafa;*/
+/*}*/
+
+/*.profile-container {*/
+/*    max-width: 935px;*/
+/*    margin: 0 auto;*/
+/*    padding: 30px 20px;*/
+/*}*/
+
+
+/*.profile-header {*/
+/*    display: grid;*/
+/*    grid-template-columns: 1fr 2fr;*/
+/*    gap: 60px;*/
+/*    margin-bottom: 44px;*/
+/*    padding-bottom: 44px;*/
+/*    border-bottom: 1px solid #dbdbdb;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .profile-header {*/
+/*        grid-template-columns: 1fr;*/
+/*        gap: 30px;*/
+/*        text-align: center;*/
+/*    }*/
+/*}*/
+
+
+/*.profile-picture-section {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: flex-start;*/
+/*}*/
+
+/*.profile-picture-wrapper {*/
+/*    width: 150px;*/
+/*    height: 150px;*/
+/*    border-radius: 50%;*/
+/*    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);*/
+/*    padding: 3px;*/
+/*    cursor: pointer;*/
+/*    transition: transform 0.2s;*/
+/*}*/
+
+/*.profile-picture-wrapper:hover {*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.profile-picture {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    border-radius: 50%;*/
+/*    object-fit: cover;*/
+/*    border: 3px solid white;*/
+/*}*/
+
+/*.profile-picture-placeholder {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    border-radius: 50%;*/
+/*    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    font-size: 60px;*/
+/*    font-weight: 700;*/
+/*    color: white;*/
+/*    border: 3px solid white;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .profile-picture-wrapper {*/
+/*        width: 120px;*/
+/*        height: 120px;*/
+/*    }*/
+
+/*    .profile-picture-placeholder {*/
+/*        font-size: 48px;*/
+/*    }*/
+/*}*/
+
+
+/*.profile-info-section {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 20px;*/
+/*}*/
+
+/*.profile-top {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 20px;*/
+/*    flex-wrap: wrap;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .profile-top {*/
+/*        justify-content: center;*/
+/*    }*/
+/*}*/
+
+/*.profile-username {*/
+/*    font-size: 28px;*/
+/*    font-weight: 300;*/
+/*    color: #262626;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.profile-actions {*/
+/*    display: flex;*/
+/*    gap: 8px;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.btn-edit-profile,*/
+/*.btn-follow,*/
+/*.btn-following,*/
+/*.btn-requested,*/
+/*.btn-message {*/
+/*    padding: 7px 16px;*/
+/*    border: 1px solid #dbdbdb;*/
+/*    background: white;*/
+/*    border-radius: 8px;*/
+/*    font-size: 14px;*/
+/*    font-weight: 600;*/
+/*    cursor: pointer;*/
+/*    transition: all 0.2s;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 6px;*/
+/*}*/
+
+/*.btn-follow {*/
+/*    background: #0095f6;*/
+/*    color: white;*/
+/*    border-color: #0095f6;*/
+/*}*/
+
+/*.btn-follow:hover {*/
+/*    background: #1877f2;*/
+/*}*/
+
+/*.btn-following {*/
+/*    background: #efefef;*/
+/*    border-color: #dbdbdb;*/
+/*}*/
+
+/*.btn-following:hover {*/
+/*    background: #e0e0e0;*/
+/*}*/
+
+/*.btn-requested {*/
+/*    background: #efefef;*/
+/*    cursor: not-allowed;*/
+/*    opacity: 0.6;*/
+/*}*/
+
+/*.btn-message {*/
+/*    background: #0095f6;*/
+/*    color: white;*/
+/*    border-color: #0095f6;*/
+/*}*/
+
+/*.btn-message:hover {*/
+/*    background: #1877f2;*/
+/*}*/
+
+/*.btn-edit-profile:hover {*/
+/*    background: #fafafa;*/
+/*}*/
+
+/*.btn-icon {*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    border: 1px solid #dbdbdb;*/
+/*    background: white;*/
+/*    border-radius: 8px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    transition: background 0.2s;*/
+/*}*/
+
+/*.btn-icon:hover {*/
+/*    background: #fafafa;*/
+/*}*/
+
+
+/*.profile-stats {*/
+/*    display: flex;*/
+/*    gap: 40px;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .profile-stats {*/
+/*        justify-content: center;*/
+/*        padding-top: 12px;*/
+/*        border-top: 1px solid #dbdbdb;*/
+/*    }*/
+/*}*/
+
+/*.stat {*/
+/*    display: flex;*/
+/*    gap: 4px;*/
+/*    align-items: baseline;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*.stat-count {*/
+/*    font-weight: 600;*/
+/*    color: #262626;*/
+/*}*/
+
+/*.stat-label {*/
+/*    color: #262626;*/
+/*    font-weight: 400;*/
+/*}*/
+
+
+/*.profile-bio {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 4px;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .profile-bio {*/
+/*        align-items: center;*/
+/*    }*/
+/*}*/
+
+/*.bio-fullname {*/
+/*    font-weight: 600;*/
+/*    color: #262626;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.bio-text {*/
+/*    color: #262626;*/
+/*    margin: 0;*/
+/*    line-height: 1.5;*/
+/*    white-space: pre-wrap;*/
+/*}*/
+
+
+/*.profile-tabs {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    gap: 60px;*/
+/*    border-top: 1px solid #dbdbdb;*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.tab {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 6px;*/
+/*    padding: 16px 0;*/
+/*    border: none;*/
+/*    background: none;*/
+/*    color: #8e8e8e;*/
+/*    font-size: 12px;*/
+/*    font-weight: 600;*/
+/*    letter-spacing: 1px;*/
+/*    cursor: pointer;*/
+/*    border-top: 1px solid transparent;*/
+/*    margin-top: -1px;*/
+/*    transition: all 0.2s;*/
+/*}*/
+
+/*.tab:hover {*/
+/*    color: #262626;*/
+/*}*/
+
+/*.tab.active {*/
+/*    color: #262626;*/
+/*    border-top-color: #262626;*/
+/*}*/
+
+
+/*.profile-posts {*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.posts-grid {*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(3, 1fr);*/
+/*    gap: 28px;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .posts-grid {*/
+/*        grid-template-columns: repeat(3, 1fr);*/
+/*        gap: 4px;*/
+/*    }*/
+/*}*/
+
+/*.post-grid-item {*/
+/*    position: relative;*/
+/*    aspect-ratio: 1;*/
+/*    cursor: pointer;*/
+/*    overflow: hidden;*/
+/*    background: #fafafa;*/
+/*    border-radius: 4px;*/
+/*}*/
+
+/*.post-grid-image {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*    transition: transform 0.3s;*/
+/*}*/
+
+/*.post-grid-item:hover .post-grid-image {*/
+/*    transform: scale(1.05);*/
+/*}*/
+
+/*.post-grid-content {*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    padding: 20px;*/
+/*    text-align: center;*/
+/*    background: white;*/
+/*    border: 1px solid #dbdbdb;*/
+/*}*/
+
+/*.post-grid-content p {*/
+/*    color: #262626;*/
+/*    font-size: 14px;*/
+/*    line-height: 1.4;*/
+/*    overflow: hidden;*/
+/*    display: -webkit-box;*/
+/*    -webkit-line-clamp: 4;*/
+/*    -webkit-box-orient: vertical;*/
+/*}*/
+
+/*.post-grid-overlay {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    background: rgba(0, 0, 0, 0.3);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    opacity: 0;*/
+/*    transition: opacity 0.3s;*/
+/*}*/
+
+/*.post-grid-item:hover .post-grid-overlay {*/
+/*    opacity: 1;*/
+/*}*/
+
+/*.overlay-stats {*/
+/*    display: flex;*/
+/*    gap: 30px;*/
+/*    color: white;*/
+/*    font-weight: 600;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*.overlay-stats span {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*}*/
+
+
+/*.no-posts {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    padding: 60px 20px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.no-posts-icon {*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    border: 3px solid #262626;*/
+/*    border-radius: 50%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    margin-bottom: 24px;*/
+/*}*/
+
+/*.no-posts h3 {*/
+/*    font-size: 28px;*/
+/*    font-weight: 700;*/
+/*    color: #262626;*/
+/*    margin: 0 0 12px 0;*/
+/*}*/
+
+/*.no-posts p {*/
+/*    color: #737373;*/
+/*    font-size: 14px;*/
+/*    margin: 0;*/
+/*}*/
+
+
+/*.profile-loading {*/
+/*    min-height: 100vh;*/
+/*    background: #fafafa;*/
+/*}*/
+
+/*.loading-spinner {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    min-height: 60vh;*/
+/*    color: #8e8e8e;*/
+/*    font-size: 16px;*/
+/*}*/
+
+

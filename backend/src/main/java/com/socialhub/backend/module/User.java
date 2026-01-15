@@ -1,5 +1,6 @@
 package com.socialhub.backend.module;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // ✅ 1. Add this import
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,25 +32,14 @@ public class User {
     @Email(message = "Email must be a valid email address")
     private String email;
 
-
     @Column(nullable = false)
     @NotBlank(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(
-            regexp = "^(?=.*[@#$%^&+=!]).*$",
-            message = "Password must contain at least one special character"
-    )
+    @JsonIgnore // ✅ 2. Add this! (Prevents sending password to frontend)
     private String password;
 
-
     @Column(name = "full_name", length = 100)
-    @Pattern(
-            regexp = "^[A-Za-z]{2,}(?: [A-Za-z]{2,})*$",
-            message = "Full name must contain at least two alphabets and may include spaces between words"
-    )
     private String fullName;
-
-
 
     @Column(columnDefinition = "TEXT")
     private String bio;
@@ -60,7 +50,9 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
     @CreationTimestamp

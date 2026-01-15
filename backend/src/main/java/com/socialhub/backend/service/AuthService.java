@@ -1,7 +1,9 @@
 package com.socialhub.backend.service;
 
+import com.socialhub.backend.dto.AuthResponse;
 import com.socialhub.backend.dto.LoginRequest;
 import com.socialhub.backend.dto.RegisterRequest;
+import com.socialhub.backend.dto.UserDTO;
 import com.socialhub.backend.module.User;
 import com.socialhub.backend.repository.UserRepository;
 import com.socialhub.backend.security.JwtUtil;
@@ -40,7 +42,7 @@ public class AuthService {
         userRepository.save(user);
     }
 
-    public String login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("Invalid username or password"));
 
@@ -51,7 +53,16 @@ public class AuthService {
         if (!user.getIsActive()) {
             throw new RuntimeException("Account is deactivated");
         }
+        String token = jwtUtil.generateToken(user.getUsername());
+        UserDTO userDTO = new UserDTO(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getFullName(),
+                user.getBio(),
+                user.getProfilePicture()
+        );
 
-        return jwtUtil.generateToken(user.getUsername());
+        return new AuthResponse(token,userDTO);
     }
 }

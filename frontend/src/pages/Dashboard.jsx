@@ -1,82 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { getFeed, getPendingRequests } from '../services/api';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import CreatePost from '../components/CreatePost';
 import PostCard from '../components/PostCard';
-import FriendRequest from '../components/FriendRequest';
-import './Dashboard.css';
+import { getFeed } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 function Dashboard() {
     const { user } = useAuth();
     const [posts, setPosts] = useState([]);
-    const [friendRequests, setFriendRequests] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (user) {
-            loadDashboardData();
+        if (user && user.id) {
+            fetchFeed();
         }
     }, [user]);
 
-    const loadDashboardData = async () => {
+    const fetchFeed = async () => {
         try {
-            setLoading(true);
-            const [feedResponse, requestsResponse] = await Promise.all([
-                getFeed(user.id),
-                getPendingRequests(user.id)
-            ]);
-
-            setPosts(feedResponse.data);
-            setFriendRequests(requestsResponse.data);
+            const response = await getFeed(user.id);
+            setPosts(response.data);
         } catch (error) {
-            console.error('Failed to load dashboard:', error);
+            console.error('Failed to load feed:', error);
         } finally {
             setLoading(false);
         }
     };
 
     const handlePostCreated = (newPost) => {
-        setPosts([newPost, ...posts]);
+        const postWithUser = {
+            ...newPost,
+            authorName: user.fullName || user.username,
+            user: user,
+            authorId: user.id,
+            likesCount: 0,
+            commentsCount: 0,
+            likedByCurrentUser: false
+        };
+        setPosts([postWithUser, ...posts]);
     };
 
     const handlePostDeleted = (postId) => {
-        setPosts(posts.filter(post => post.id !== postId));
+        setPosts(posts.filter(p => p.id !== postId));
     };
 
     return (
-        <div className="dashboard">
+        <div style={{ minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
             <Navbar />
 
-            <div className="dashboard-container">
-                <Sidebar />
+            <div style={{
+                display: 'flex',
+                maxWidth: '1200px',
+                margin: '0 auto',
+                /* ✅ FIX: 0px top/bottom padding, 20px left/right */
+                padding: '0 20px',
+                gap: '20px'
+            }}>
+                {/* Sidebar Column */}
+                <div style={{ width: '240px', flexShrink: 0 ,marginTop:'-20px'}}>
+                    <Sidebar />
+                </div>
 
-                <main className="dashboard-main">
+                {/* Feed Column */}
+                {/* ✅ FIX: Added paddingTop here instead so Sidebar isn't pushed down */}
+                <div style={{ flex: 1, maxWidth: '600px', paddingTop: '20px' }}>
                     <CreatePost onPostCreated={handlePostCreated} />
 
-                    {friendRequests.length > 0 && (
-                        <div className="friend-requests-section">
-                            <h3>Friend Requests</h3>
-                            <div className="friend-requests-list">
-                                {friendRequests.map(request => (
-                                    <FriendRequest
-                                        key={request.id}
-                                        request={request}
-                                        onUpdate={loadDashboardData}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="posts-section">
+                    <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                         {loading ? (
-                            <div className="loading">Loading feed...</div>
+                            <p style={{ textAlign: 'center', marginTop: '20px' }}>Loading feed...</p>
                         ) : posts.length === 0 ? (
-                            <div className="empty-state">
-                                <p>No posts yet. Start following friends to see their posts!</p>
-                            </div>
+                            <p style={{ textAlign: 'center', color: '#666', marginTop: '20px' }}>
+                                No posts yet. Add friends or write your first post!
+                            </p>
                         ) : (
                             posts.map(post => (
                                 <PostCard
@@ -88,14 +85,10 @@ function Dashboard() {
                             ))
                         )}
                     </div>
-                </main>
+                </div>
 
-                <aside className="dashboard-aside">
-                    <div className="suggestions-card">
-                        <h3>Suggested Friends</h3>
-                        <p className="coming-soon">Coming soon...</p>
-                    </div>
-                </aside>
+                {/* Right Spacer Column */}
+                <div style={{ width: '280px', display: 'none', '@media (min-width: 1000px)': { display: 'block' } }}></div>
             </div>
         </div>
     );

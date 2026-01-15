@@ -38,8 +38,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
-            String token = authService.login(request);
-            return ResponseEntity.ok(new AuthResponse(token));
+            AuthResponse response = authService.login(request);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> error = new HashMap<>();
             error.put("error", e.getMessage());
