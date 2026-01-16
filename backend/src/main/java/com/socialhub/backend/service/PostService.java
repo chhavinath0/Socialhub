@@ -2,21 +2,13 @@ package com.socialhub.backend.service;
 
 import com.socialhub.backend.dto.PostDTO;
 import com.socialhub.backend.dto.UserDTO;
-import com.socialhub.backend.module.Friendship; // Import this
-import com.socialhub.backend.module.Post;
-import com.socialhub.backend.module.PostVisibility;
-import com.socialhub.backend.module.User;
-import com.socialhub.backend.repository.FriendshipRepository; // Import this
-import com.socialhub.backend.repository.LikeRepository;
-import com.socialhub.backend.repository.PostRepository;
-import com.socialhub.backend.repository.UserRepository;
+import com.socialhub.backend.module.*;
+import com.socialhub.backend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.socialhub.backend.repository.SharedPostRepository; // Import
-import com.socialhub.backend.module.SharedPost;
 import org.springframework.web.multipart.MultipartFile;
-import com.socialhub.backend.module.MediaType; // Ensure this is your Enum, not Spring's
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +27,8 @@ public class PostService {
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
     private final SharedPostRepository sharedPostRepository;
+    private final SavedPostRepository savedPostRepository;
+
 
     // ✅ FIX: This was missing! We must inject this repository.
     private final FriendshipRepository friendshipRepository;
@@ -61,7 +55,11 @@ public class PostService {
                 }
 
                 // 2. Generate unique filename
-                String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+                //String filename = UUID.randomUUID().toString() + "_" + image.getOriginalFilename();
+                String original = image.getOriginalFilename();
+                String cleanName = original.replaceAll("[^a-zA-Z0-9._-]", "_");
+                String filename = UUID.randomUUID() + "_" + cleanName;
+
                 Path filePath = uploadPath.resolve(filename);
 
                 // 3. Save file
@@ -81,6 +79,42 @@ public class PostService {
         Post savedPost = postRepository.save(post);
         return convertToDTO(savedPost, userId);
     }
+    @Transactional(readOnly = true)
+    public List<PostDTO> getSavedPosts(Long userId) {
+
+        return savedPostRepository.findByUserIdOrderByCreatedAtDesc(userId)
+                .stream()
+                .map(saved -> convertToDTO(saved.getPost(), userId))
+                .collect(Collectors.toList());
+    }
+
+
+    @Transactional
+    public void toggleSavePost(Long postId, Long userId) {
+
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        // 🚫 RULE: User cannot save own post
+        if (post.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You cannot save your own post");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        savedPostRepository.findByUserIdAndPostId(userId, postId)
+                .ifPresentOrElse(
+                        savedPostRepository::delete,
+                        () -> {
+                            SavedPost saved = new SavedPost();
+                            saved.setUser(user);
+                            saved.setPost(post);
+                            savedPostRepository.save(saved);
+                        }
+                );
+    }
+
 
     public List<PostDTO> getFeed(Long currentUserId) {
         // 1. Get list of all friends
@@ -124,6 +158,11 @@ public class PostService {
         boolean isLiked = post.getLikes().stream()
                 .anyMatch(like -> like.getUser().getId().equals(currentUserId));
         dto.setLikedByCurrentUser(isLiked);
+        boolean isSaved = savedPostRepository.existsByUserIdAndPostId(
+                currentUserId, post.getId()
+        );
+
+        dto.setSavedByCurrentUser(isSaved);
 
         return dto;
     }
@@ -149,4 +188,27 @@ public class PostService {
         newPost.setCreatedAt(LocalDateTime.now());
         postRepository.save(newPost);
     }
+    @Transactional(readOnly = true)
+    public List<PostDTO> getUserPosts(Long profileUserId, Long currentUserId) {
+
+        User profileUser = userRepository.findById(profileUserId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // If viewing own profile → return all posts
+        List<Post> posts;
+        if (profileUserId.equals(currentUserId)) {
+            posts = postRepository.findByUserIdWithAllVisibility(profileUserId);
+        } else {
+            // Viewing another user's profile → only show PUBLIC posts
+            posts = postRepository.findByUserIdsAndVisibility(
+                    List.of(profileUserId), PostVisibility.PUBLIC
+            );
+        }
+
+        // Convert to DTO
+        return posts.stream()
+                .map(post -> convertToDTO(post, currentUserId))
+                .collect(Collectors.toList());
+    }
+
 }

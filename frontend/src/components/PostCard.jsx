@@ -1,9 +1,13 @@
+
 import React, { useState } from 'react';
 import { Trash, Heart, Share } from 'lucide-react';
-import { toggleLike, deletePost, sharePost } from '../services/api';
+import {toggleLike, deletePost, sharePost, toggleSavePost} from '../services/api';
 import './PostCard.css';
+import { Bookmark } from 'lucide-react';
 
 // ✅ HELPER: Points to the Backend Server
+
+
 const getImageUrl = (path) => {
     if (!path) return null;
     return path.startsWith('http') ? path : `http://localhost:8080${path}`;
@@ -12,11 +16,22 @@ const getImageUrl = (path) => {
 function PostCard({ post, currentUserId, onDelete }) {
     const [isLiked, setIsLiked] = useState(post.likedByCurrentUser);
     const [likesCount, setLikesCount] = useState(post.likesCount);
+    const [isSaved, setIsSaved] = useState(post.savedByCurrentUser);
 
     // ✅ FIX 1: robustly get the author ID and Name
     // The backend uses 'post.user.id', but new posts might use 'post.authorId'
     const authorId = post.user ? post.user.id : post.authorId;
     const authorName = post.user ? post.user.username : post.authorName;
+
+    const handleSave = async () => {
+        try {
+            await toggleSavePost(post.id, currentUserId);
+            setIsSaved(prev => !prev);
+        } catch (err) {
+            alert(err.response?.data?.message || "Cannot save this post");
+        }
+    };
+
 
     const handleLike = async () => {
         const newIsLiked = !isLiked;
@@ -77,14 +92,31 @@ function PostCard({ post, currentUserId, onDelete }) {
                 </div>
             )}
 
-            <div className="post-actions" style={{borderTop: '1px solid #edf2f7', paddingTop: '12px'}}>
-                <button onClick={handleLike} className={isLiked ? 'liked' : ''} style={{color: isLiked ? '#e53e3e' : '#4a5568'}}>
-                    <Heart size={16} fill={isLiked ? "#e53e3e" : "none"} /> {likesCount} Likes
+            <div className="post-actions" style={{ borderTop: '1px solid #edf2f7', paddingTop: '12px' }}>
+                <button
+                    onClick={handleLike}
+                    className={isLiked ? 'liked' : ''}
+                    style={{ color: isLiked ? '#e53e3e' : '#4a5568' }}
+                >
+                    <Heart size={16} fill={isLiked ? "#e53e3e" : "none"} />
+                    {likesCount} Likes
                 </button>
+
                 <button onClick={handleShare}>
                     <Share size={16} /> Share
                 </button>
+
+                {/* ✅ SAVE / UNSAVE */}
+                <button
+                    onClick={handleSave}
+                    style={{ color: isSaved ? '#3182ce' : '#4a5568' }}
+                    title={isSaved ? "Unsave post" : "Save post"}
+                >
+                    <Bookmark size={16} fill={isSaved ? "#3182ce" : "none"} />
+                    {isSaved ? "Saved" : "Save"}
+                </button>
             </div>
+
         </div>
     );
 }

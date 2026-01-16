@@ -26,6 +26,9 @@ public class SharedPost {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "original_post_id", nullable = false)
     private Post originalPost;
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post sharedPost; // the new post created
 
     @Column(name = "shared_content", columnDefinition = "TEXT")
     private String sharedContent;

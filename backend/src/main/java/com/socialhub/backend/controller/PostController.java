@@ -49,4 +49,28 @@ public class PostController {
         postService.sharePost(postId, userId, content);
         return ResponseEntity.ok(java.util.Map.of("message", "Post shared successfully"));
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PostDTO>> getUserPosts(
+            @PathVariable Long userId,
+            @RequestParam Long currentUserId
+    ) {
+        return ResponseEntity.ok(postService.getUserPosts(userId, currentUserId));
+    }
+    @PostMapping("/save/toggle")
+    public ResponseEntity<?> toggleSave(
+            @RequestParam Long postId,
+            @RequestParam Long userId) {
+
+        postService.toggleSavePost(postId, userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/saved")
+    public ResponseEntity<List<PostDTO>> getSavedPosts(
+            @RequestParam Long userId) {
+
+        return ResponseEntity.ok(postService.getSavedPosts(userId));
+    }
+
+
 }

@@ -2,6 +2,9 @@ package com.socialhub.backend.repository;
 
 import com.socialhub.backend.module.Post;
 import com.socialhub.backend.module.PostVisibility;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -12,7 +12,7 @@ function Navbar() {
             <div className="navbar-container">
                 {/* Brand */}
                 <Link to="/dashboard" className="navbar-brand">
-                    <span className="brand-icon">brand_icon</span>
+                    {/*<span className="brand-icon">brand_icon</span>*/}
                     <span className="brand-text">Socialhub</span>
                 </Link>
 
@@ -26,10 +26,10 @@ function Navbar() {
                     />
                 </div>
 
-                {/* Profile */}
-                <Link to={`/profile/${user?.id}`} className="nav-link profile-link">
-                    <User size={22} />
-                </Link>
+                {/* Profile */}<Link to={`/profile/${user?.id}`} className="nav-link profile-link">
+                <User size={22} />
+            </Link>
+
             </div>
         </nav>
     );

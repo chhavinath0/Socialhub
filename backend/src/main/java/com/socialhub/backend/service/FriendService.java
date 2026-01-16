@@ -138,6 +138,21 @@ public class FriendService {
                 .map(this::convertToFriendDTO)
                 .collect(Collectors.toList());
     }
+    // Check if two users are friends
+    public boolean areFriends(Long userId1, Long userId2) {
+        return friendshipRepository.findFriendship(userId1, userId2).isPresent();
+    }
+
+    // Get total number of friends for a user
+    public int getFriendsCount(Long userId) {
+        return friendshipRepository.findByUserId(userId).size();
+    }
+
+    // Get total number of close friends for a user
+    public int getCloseFriendsCount(Long userId) {
+        return friendshipRepository.findCloseFriendsByUserId(userId).size();
+    }
+
 
     @Transactional
     public void toggleCloseFriend(Long userId, Long friendId) {
